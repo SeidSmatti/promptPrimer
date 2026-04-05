@@ -4,7 +4,7 @@ description: Design systems, branding, narrative worlds, game design, visual and
 workspace: work/
 ---
 
-# Creative — PromptGen Type Module
+# Creative — promptPrimer Type Module
 
 <overview>
 Use this module for concept-driven creative work where point of view and coherence matter: brand identity systems, design concepts, UX vision, narrative worlds, game design documents, campaign ideas, character and world bibles. If the primary deliverable is long-form prose, use `writing`. If it is an academic analysis of creative work, use `research`.
@@ -81,7 +81,7 @@ Use this module for concept-driven creative work where point of view and coheren
 
 **VOICE.md** (brand Tier 3): tone matrix, sample copy across contexts, ban-list.
 
-**REFERENCES.md**: touchstones (what to echo) and anti-references (what to avoid resembling). Specific, named works.
+**REFERENCES.md**: touchstones (what to echo) and anti-references (what to avoid resembling). **Anti-references must name at least 5 specific existing works or brands, not categories**, each with a 1–2 sentence breakdown of the exact visual and verbal elements to avoid. "Don't look corporate" is not an anti-reference. "Don't resemble Blue Bottle's stark minimalism, their sans-serif wordmark, or their ceramic-mug photography" is an anti-reference. The list is a hard traceability check: every creative decision in SYSTEM.md and DELIVERABLES.md must survive a scan against every anti-reference, and any resemblance is a revision trigger.
 
 **DELIVERABLES.md**: every asset with format, dimensions, usage context, and acceptance criteria.
 

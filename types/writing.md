@@ -4,7 +4,7 @@ description: Articles, blog posts, books, newsletters, marketing copy, fiction, 
 workspace: drafts/
 ---
 
-# Writing — PromptGen Type Module
+# Writing — promptPrimer Type Module
 
 <overview>
 Use this module for long-form prose where voice, structure, and audience matter more than raw information transfer. Covers articles, blog posts, essays, newsletters, marketing copy, short stories, scripts, book chapters, and speeches. If the output is technical reference or how-to, use `documentation`. If it requires citations and rigorous synthesis, use `research`.
@@ -71,7 +71,7 @@ Use this module for long-form prose where voice, structure, and audience matter 
 
 **OUTLINE.md**: beat-by-beat structural plan. Each beat: what happens or what is argued, why it's here, how it connects to the next. Non-fiction: claim → evidence → so-what. Fiction: scene purpose → conflict → change.
 
-**STYLE.md**: POV, tense, reading level, sentence-length target, rhythm notes, stylistic touchstones (authors/works to echo, works to avoid resembling), forbidden phrases, punctuation conventions, paragraph shape.
+**STYLE.md**: POV, tense, reading level, sentence-length target, rhythm notes, stylistic touchstones (authors/works to echo, works to avoid resembling), punctuation conventions, paragraph shape, and an **inline literal ban list of at least 15 concrete forbidden phrases** — not a category reference, the actual phrase list. Start from this core set and extend for the specific piece: "delve into", "it's important to note", "in today's fast-paced world", "navigate the landscape", "unlock", "leverage", "tapestry", "testament to", "journey", "ever-evolving", "at the end of the day", "when it comes to", "moreover", "furthermore", "additionally", "in a world where", "the reality is", "as an AI", "underscores the importance". Every phrase must be character-for-character banned; agents run a sweep for each before declaring a draft ready for review.
 
 **STRUCTURE.md** (Tier 3): chapter/act map with throughlines, pacing, arc shape, setups and payoffs.
 

@@ -4,7 +4,7 @@ description: Strategy, market analysis, business plans, memos, pitch content, co
 workspace: deliverables/
 ---
 
-# Business — PromptGen Type Module
+# Business — promptPrimer Type Module
 
 <overview>
 Use this module for strategic, analytical, or decision-support work aimed at business stakeholders: strategy memos, business plans, market analyses, competitive landscapes, go-to-market plans, pitch narratives, investor updates, operational reviews. If the work requires peer-reviewed citations, use `research`. If it is customer-facing marketing prose, use `writing`.
@@ -82,7 +82,13 @@ Use this module for strategic, analytical, or decision-support work aimed at bus
 
 **RISK_REGISTER.md** (Tier 3): risks categorized (market / execution / financial / regulatory / people), likelihood × impact, mitigation owner.
 
-**RECOMMENDATION.md**: recommendation in one sentence, rationale in 3–5 bullets, top risks with mitigations, expected outcome, decision required.
+**RECOMMENDATION.md**: the recommendation as one sentence **on line 1, verbatim, before anything else** — no heading, no preamble, no hedge. Rationale in 3–5 bullets immediately below. Then top risks with mitigations, expected outcome, and the decision required. Enforce the **answer-first test**: if line 1 is anything other than the recommendation itself, the file fails and is rewritten.
+
+Passing example (line 1): `Launch in the EU in Q3 2027, starting with Germany and the Netherlands only.`
+
+Failing example (line 1): `## Recommendation` — because the recommendation is hidden behind a heading.
+
+Failing example (line 1): `After considering the EU market opportunity and the associated risks, we recommend...` — because the answer is buried in preamble.
 
 **DELIVERABLE_PLAN.md**: format (memo / deck / plan), length, section map, key visuals.
 

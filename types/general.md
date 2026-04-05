@@ -4,7 +4,7 @@ description: Fallback for tasks that do not cleanly fit other types
 workspace: workspace/
 ---
 
-# General — PromptGen Type Module
+# General — promptPrimer Type Module
 
 <overview>
 Use this module ONLY when no other type fits — mixed-domain work, personal projects, planning tasks, process design, life admin, bespoke workflows. Before selecting `general`, double-check whether `coding`, `data`, `writing`, `research`, `documentation`, `business`, `education`, or `creative` actually fits; specific types always give better scaffolds. Use `general` as a last resort.
@@ -60,7 +60,7 @@ Use this module ONLY when no other type fits — mixed-domain work, personal pro
 
 <artifact_specs>
 
-**GOAL.md**: one-sentence goal, success criteria, non-goals, deadline, definition of done.
+**GOAL.md**: one-sentence goal, **three explicit SMART success metrics** (specific, measurable, achievable, relevant, time-bound), non-goals, deadline, and a definition of done that references the metrics. Each metric must include a concrete verification method — how the user will prove, after the fact, that the metric was hit. Example format per metric: `1. <metric> — <target value> — <verification method>`. E.g., `1. Visit all 5 parks — 5/5 — photo of self at each entrance sign, committed to /trip/photos/`. Without the verification method, the metric does not count; rewrite it until the method is concrete.
 
 **CONTEXT.md** (Tier 3): situation, stakeholders, constraints, history, prior attempts.
 

@@ -4,7 +4,7 @@ description: Curricula, lesson plans, course materials, exercises, training cont
 workspace: materials/
 ---
 
-# Education — PromptGen Type Module
+# Education — promptPrimer Type Module
 
 <overview>
 Use this module for learning materials: curricula, lesson plans, courses, training modules, exercises, quizzes, workbooks, worksheets, and instructional content for any age or setting. If the deliverable is general explanation without learning-outcome alignment, use `writing` or `documentation`.
@@ -71,7 +71,13 @@ Use this module for learning materials: curricula, lesson plans, courses, traini
 
 **LEARNER_PROFILE.md**: age or experience level, prior knowledge, context of learning (classroom / self-paced / workshop), time budget, motivations, known barriers.
 
-**OUTCOMES.md**: measurable statements using Bloom-aligned verbs. Bad: "understand recursion". Good: "trace execution of a recursive function on a given input and predict its return value". Each outcome tagged with Bloom level.
+**OUTCOMES.md**: measurable statements using Bloom-aligned verbs. Bad: "understand recursion". Good: "trace execution of a recursive function on a given input and predict its return value". **Every outcome carries an explicit Bloom-level tag** in brackets at the end of the line, one of: `[remember]`, `[understand]`, `[apply]`, `[analyze]`, `[evaluate]`, `[create]`. **Every activity in downstream LESSON files must map to at least one outcome by tag**, and every assessment item must match its outcome's Bloom level. Include this inline Bloom cheat sheet verbatim at the top of OUTCOMES.md:
+> - **remember** — recall facts and basic concepts (define, list, identify, name)
+> - **understand** — explain ideas and concepts (describe, summarize, classify, interpret)
+> - **apply** — use information in new situations (execute, implement, solve, use)
+> - **analyze** — draw connections, distinguish parts (differentiate, organize, compare, examine)
+> - **evaluate** — justify a stand or decision (appraise, critique, defend, judge)
+> - **create** — produce new or original work (design, assemble, construct, devise)
 
 **PROGRAM_OUTCOMES.md / MODULE_OUTCOMES.md** (Tier 3): hierarchical outcomes where module outcomes aggregate to program outcomes.
 

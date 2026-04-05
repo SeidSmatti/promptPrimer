@@ -1,4 +1,4 @@
-# PromptGen — Agentic Task Prompt Generator
+# promptPrimer — Agentic Task Prompt Generator
 
 > **Harness note:** This repo ships identical instruction files at the root for multiple harnesses: `CLAUDE.md` (Claude Code), `GEMINI.md` (Gemini CLI), `AGENTS.md` (Codex CLI, OpenCode, Cursor, Aider, and other AGENTS.md-aware tools). They contain the same content. Whichever file your harness auto-loads, **do not read the other two** — they are duplicates and will only pollute context.
 >
@@ -28,7 +28,7 @@ The *content* of that nested file is identical regardless of harness — only th
 
 ## Supported Task Types
 
-PromptGen handles tasks across these domains. Each has a dedicated module in `types/` that defines its artifacts, best practices, and guardrails:
+promptPrimer handles tasks across these domains. Each has a dedicated module in `types/` that defines its artifacts, best practices, and guardrails:
 
 | Type            | When to pick it |
 |-----------------|-----------------|
@@ -48,7 +48,11 @@ Only one type is active per generation. Load only the matching type module.
 
 ### 1. Load Knowledge
 
-At the start of every session, read `knowledge/bestpractices.md`. Ground every structural and stylistic choice in it.
+At the start of every session, read BOTH:
+- `knowledge/bestpractices.md` — prompt engineering best practices
+- `knowledge/guardrails.md` — universal autonomy and context-preservation directives that every generated prompt must include verbatim
+
+Ground every structural and stylistic choice in these two files.
 
 ### 2. Receive User Input
 
@@ -96,10 +100,24 @@ Write a single self-contained prompt file to `output/<task-slug>-prompt.md`. **N
 The generated prompt must:
 - Give the downstream agent a clear role tailored to the type
 - Instruct it to build the type-appropriate scaffold, sized to the tier
-- Tell it to **stop and wait for user review** before producing any final deliverable
+- **Include `STATE.md` at the project root in the scaffold, regardless of task type or tier** — this is universal
+- Tell it to **stop and wait for user review** once the scaffold is complete — this is the single mandatory checkpoint
 - Bake in the type-specific guardrails and failure-mode prevention from the loaded module
+- **Copy the `<autonomy>` and `<context_preservation>` blocks verbatim from `knowledge/guardrails.md`** into the generated prompt — these are non-negotiable cross-cutting directives
+- Instruct the nested agent-instruction file (CLAUDE.md / GEMINI.md / AGENTS.md in the generated project) to include the session opening protocol and `STATE.md` update rules from `guardrails.md`, on top of whatever the type module specifies
 - Name the nested agent-instruction file per the chosen harness
 - Include definitive choices — no "TBD" or placeholders
+
+## Universal Guardrails
+
+Every generated prompt must include, verbatim or near-verbatim, the `<autonomy>` and `<context_preservation>` blocks from `knowledge/guardrails.md`. These are cross-cutting concerns that apply to every task type and every tier. They exist to:
+
+1. **Minimize token waste** from unnecessary user round-trips. The autonomy block raises the bar for asking — the downstream agent decides, documents, and proceeds on reversible judgment calls instead of pausing for confirmation.
+2. **Survive harness compaction.** The context-preservation block mandates `STATE.md`, a durable session-continuity snapshot at the project root, plus a session opening protocol the downstream agent runs before touching any work.
+
+These blocks are authoritative. Do not paraphrase them loosely, do not omit parts, do not reorder. Copy them into the generated prompt under `<autonomy>` and `<context_preservation>` XML sections. The type module's own directives layer on top of them, never replace them.
+
+`STATE.md` is added to every scaffold, regardless of what the type module's tier listings say. Treat type-module scaffolds as "domain-specific artifacts" and `STATE.md` as a universal top-level addition.
 
 ## Generic Prompt Quality Standards
 
@@ -108,10 +126,23 @@ Applied on top of whatever the type module specifies:
 - **Grounded**: every instruction traceable to the user's idea, clarifying answers, or a defensible inference
 - **Complete**: self-contained — a fresh agent with zero context should produce excellent results from the prompt alone
 - **Constrained**: explicitly prevents over-scope, over-engineering, and premature execution
-- **Structured**: XML tags (`<role>`, `<context>`, `<instructions>`, `<output_format>`, `<constraints>`), numbered steps, clear hierarchy
+- **Structured**: XML tags (`<role>`, `<context>`, `<instructions>`, `<output_format>`, `<autonomy>`, `<context_preservation>`, `<constraints>`), numbered steps, clear hierarchy
 - **Right-sized**: tier chosen to match actual complexity — no bureaucracy for small tasks, no underplanning for big ones
 - **Harness-correct**: nested agent-file named per the chosen harness
-- **Type-faithful**: every guardrail and artifact comes from the loaded type module, not guesswork
+- **Type-faithful**: every domain-specific guardrail and artifact comes from the loaded type module, not guesswork
+- **Token-efficient**: the `<autonomy>` block is included so the downstream agent does not drip-ask
+- **Compaction-resilient**: the `<context_preservation>` block is included so the downstream agent maintains state across compaction
+
+## Extending promptPrimer (read only on explicit user request)
+
+Two files exist for contributors adding new capabilities to promptPrimer itself. **Do not read these files as part of normal prompt generation.** Read them only if the user explicitly asks to add a new task type, augment an existing type module, or contribute an improvement backed by A/B testing:
+
+- `knowledge/new_type_workflow.md` — the complete workflow for adding a new task type. Includes mandatory A/B testing with 3 dummy subjects, 3 conditions (new type vs. `general` baseline vs. simple ablation), blind evaluation on the 5-criterion rubric, and a decision rule for when a proposed type is ready to submit vs. needs refinement.
+- `types/_TEMPLATE.md` — the template to copy when creating a new type module. Sized to match existing modules (~100–140 lines) and covers overview, domain best practices, tier-1/2/3 artifacts, content specs, failure modes, and nested-agent directives.
+
+If the user says something like "add a new type for legal work", "I want promptPrimer to support music composition", or "propose an augmentation to the business module with A/B evidence", read these two files in full and follow the workflow. Otherwise leave them closed — they are meta-instructions about extending promptPrimer itself, not part of the routine prompt-generation pipeline.
+
+Contribution submissions additionally follow the PR template at `.github/PULL_REQUEST_TEMPLATE.md` and the contribution guide at `CONTRIBUTING.md`. A/B testing evidence is mandatory for any new type module or augmentation to an existing one; the evidence lives in a dedicated `opti/<folder_name>/` bundle that travels with the PR.
 
 ## What You Must NOT Do
 
@@ -120,9 +151,11 @@ Applied on top of whatever the type module specifies:
 - Do not read sibling instruction files at repo root (`GEMINI.md`, `AGENTS.md`, etc. if another is loaded)
 - Do not read `README.md` or `LICENSE` — publication-only, zero operational value
 - Do not read type files other than the one matching your classification
-- Do not skip `knowledge/bestpractices.md`
+- Do not skip `knowledge/bestpractices.md` or `knowledge/guardrails.md`
 - Do not skip the clarifying-questions step — but do not exceed 8 questions or pad
 - Do not ask harness selection as a separate round-trip — always bundle with domain questions
 - Do not generate vague or generic prompts — every prompt must be tailored to this user's idea and answers
 - Do not include "TBD" or placeholder text in generated prompts — make definitive choices
 - Do not force maximum tier on small tasks
+- Do not omit `STATE.md` from any generated scaffold
+- Do not paraphrase away or truncate the `<autonomy>` and `<context_preservation>` blocks

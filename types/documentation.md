@@ -4,7 +4,7 @@ description: Technical docs, user guides, tutorials, reference manuals, knowledg
 workspace: docs/
 ---
 
-# Documentation — PromptGen Type Module
+# Documentation — promptPrimer Type Module
 
 <overview>
 Use this module when the deliverable is user-facing documentation for a product, API, library, system, or process. Covers tutorials, how-to guides, reference, and explanation (the Diátaxis four quadrants), plus README files, runbooks, and onboarding materials. If the output is a marketing blog post, use `writing`. If it is an academic synthesis, use `research`.
@@ -67,7 +67,13 @@ Use this module when the deliverable is user-facing documentation for a product,
 
 **DOC_BRIEF.md**: target reader, prerequisites, what the reader achieves after reading, scope, non-goals, success criteria ("reader can complete X without asking for help").
 
-**IA.md**: page map organized by Diátaxis quadrant. Each page: title, quadrant, audience, one-sentence purpose, prerequisites, linked-from and links-to.
+**IA.md**: page map organized by Diátaxis quadrant. Each page carries an **explicit Diátaxis quadrant tag** (`tutorial` | `how-to` | `reference` | `explanation`), audience, one-sentence purpose, prerequisites, linked-from and links-to. **Hard rule: no page may mix quadrants.** Include this inline cheat sheet verbatim at the top of IA.md so no external lookup is needed:
+> - **Tutorial** (learning-oriented): holds the reader's hand through a first experience; optimized for discovery and confidence, not efficiency.
+> - **How-to** (task-oriented): steps to accomplish a specific real-world goal for someone who already knows the basics.
+> - **Reference** (information-oriented): accurate, complete, dry lookup. Describes the machinery.
+> - **Explanation** (understanding-oriented): context, concepts, design rationale. Why it works this way.
+>
+> If a page "feels like it could be two quadrants", split it into two pages.
 
 **PERSONAS.md** (Tier 3): reader personas — role, goals, pain points, prior knowledge, context of use.
 

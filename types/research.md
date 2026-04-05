@@ -4,7 +4,7 @@ description: Academic research, literature reviews, systematic reviews, rigorous
 workspace: research/
 ---
 
-# Research — PromptGen Type Module
+# Research — promptPrimer Type Module
 
 <overview>
 Use this module when the work demands verifiable sources, rigorous synthesis, and citation discipline. Covers literature reviews, systematic reviews, meta-analyses, research proposals, academic papers, policy research, annotated bibliographies, and landscape studies where every claim must be defensible. If the output is opinion-driven or uncited, use `writing`. If it is market or strategy advice for decision-makers, use `business`.
@@ -41,6 +41,7 @@ Use this module when the work demands verifiable sources, rigorous synthesis, an
   QUESTION.md
   METHOD.md            # Search strategy, inclusion criteria, analysis plan
   SOURCES.md           # Bibliography with tier classification
+  VERIFICATION_LOG.md  # Per-source DOI/metadata verification ledger (hard gate)
   NOTES.md             # Annotations with page-anchored quotes
   SYNTHESIS.md         # Thematic synthesis, gaps, contradictions
   OUTPUT_PLAN.md       # Structure of final deliverable
@@ -55,6 +56,7 @@ Use this module when the work demands verifiable sources, rigorous synthesis, an
   PROTOCOL.md          # Pre-registered protocol (inclusion, exclusion, analysis)
   METHOD.md            # PRISMA-compliant search + screening + extraction
   SOURCES.md           # Full corpus with screening decisions
+  VERIFICATION_LOG.md  # Per-source DOI/metadata verification ledger (hard gate)
   EXTRACTION.md        # Data extraction template and results
   NOTES.md
   SYNTHESIS.md         # Thematic and quantitative synthesis
@@ -74,7 +76,9 @@ Use this module when the work demands verifiable sources, rigorous synthesis, an
 
 **PROTOCOL.md** (Tier 3): pre-registered version of METHOD.md that does not change mid-study. Deviations logged explicitly with reasons.
 
-**SOURCES.md**: full bibliography entries in the declared citation style. Each entry: full citation, DOI/URL, source tier, why included, status (cited / read / screened / excluded-with-reason).
+**SOURCES.md**: full bibliography entries in the declared citation style. Each entry: full citation, DOI/URL, source tier, why included, status (cited / read / screened / excluded-with-reason), and a pointer to its VERIFICATION_LOG.md entry.
+
+**VERIFICATION_LOG.md** (Tier 2+): per-source DOI and metadata verification ledger. This is the operational enforcement of the "zero fabricated citations" rule. Schema per source: source_id | DOI | author(s) | title | venue | year | verified_at | verifier_method | verified_against_url | status. The verification procedure is: (1) resolve the DOI on doi.org or crossref.org, (2) compare every metadata field character-for-character against the resolved record, (3) if any field disagrees, mark the source red and either correct or remove. No source may be cited in NOTES.md, SYNTHESIS.md, or OUTPUT_PLAN.md until its VERIFICATION_LOG.md row is green. This is a hard gate, not a soft suggestion.
 
 **EXTRACTION.md** (Tier 3): per-source data extraction — study design, sample, intervention/variable, outcome, effect size, risk of bias.
 
@@ -106,7 +110,7 @@ Guardrails the generated prompt MUST include:
 
 <nested_agent_file_directives>
 The nested agent-instruction file must direct future agents to:
-- Never add a citation to SOURCES.md without verifying authors, title, venue, year, and a stable identifier
+- Never add a citation to SOURCES.md without first adding a green VERIFICATION_LOG.md row confirming every metadata field against the resolved DOI
 - Store or link the actual PDFs/full texts in `research/`
 - Include page numbers with every quote and paraphrase
 - Flag suspected fabricated citations from upstream sources immediately

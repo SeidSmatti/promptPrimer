@@ -4,7 +4,7 @@ description: Software projects, scripts, libraries, apps, and systems — delive
 workspace: project/
 ---
 
-# Coding — PromptGen Type Module
+# Coding — promptPrimer Type Module
 
 <overview>
 Use this module when the primary deliverable is executable code: scripts, utilities, libraries, apps, CLIs, services, full systems. If the user is producing software artifacts that compile, run, or get imported by other code, this is the right type. Hybrid tasks (e.g., "build a scraper and analyze the results") default here if the code component is substantial; otherwise consider `data`.

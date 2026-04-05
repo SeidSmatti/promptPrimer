@@ -4,7 +4,7 @@ description: Data extraction, scraping, ETL, cleaning, transformation, analysis,
 workspace: data/
 ---
 
-# Data — PromptGen Type Module
+# Data — promptPrimer Type Module
 
 <overview>
 Use this module when the deliverable is data itself — extracted, cleaned, transformed, analyzed, or reported. Covers web scraping, document extraction, API harvesting, ETL pipelines, dataset cleaning, statistical analysis, and data-driven reports. If substantial code is required but the output is data, use this type. If the output is a reusable tool or library, use `coding`. If the output is a stakeholder-facing strategic memo, use `business`.
@@ -42,6 +42,7 @@ Use this module when the deliverable is data itself — extracted, cleaned, tran
   SCHEMA.md            # Target schema with provenance fields
   PIPELINE.md          # Ordered steps with checkpoints
   QUALITY.md           # Validation rules and acceptance criteria
+  SAMPLE_CHECK.md      # Blocking gate: 20-record manual sample before any full-scale run
   ISSUELOG.md          # Known data issues and decisions
   <agent-file>
   data/
@@ -55,6 +56,7 @@ Use this module when the deliverable is data itself — extracted, cleaned, tran
   SCHEMA.md            # Includes dimensional modeling where relevant
   PIPELINE.md          # Full DAG with idempotency and recovery plans
   QUALITY.md           # Validation + reconciliation + sampling strategy
+  SAMPLE_CHECK.md      # Blocking gate: 20-record manual sample before any full-scale run
   ANALYSIS.md          # Analytical approach, statistical methods, assumptions
   ISSUELOG.md
   <agent-file>
@@ -74,6 +76,8 @@ Use this module when the deliverable is data itself — extracted, cleaned, tran
 **PIPELINE.md**: ordered stages (extract → validate → transform → load). Each stage: inputs, outputs, failure mode, retry policy, idempotency key. Explicit checkpoints.
 
 **QUALITY.md**: validation rules per field, acceptance thresholds, sampling plan for manual spot-check, reconciliation procedure, what to do when quality fails.
+
+**SAMPLE_CHECK.md** (Tier 2+): blocking gate that must clear before any full-scale extraction. Spec: extract exactly 20 records per source, manually inspect every field against source, record outcomes on a traffic-light scale (green = all fields pass, yellow = non-blocking anomalies noted in ISSUELOG, red = stop and revise SCHEMA or PIPELINE). Full-scale runs are forbidden until every source is green or yellow. No cherry-picking — the 20 records must be the first 20 the extractor encounters, not hand-picked for cleanliness.
 
 **ANALYSIS.md** (Tier 3): question → method → data → assumptions → limitations. Document the stats or modeling approach before running it.
 
@@ -102,7 +106,7 @@ The nested agent-instruction file must direct future agents to:
 - Read SCHEMA.md and QUALITY.md before any extraction work
 - Always write to `data/raw/` for extractions, never overwrite
 - Log every unexpected data shape or failure to ISSUELOG.md
-- Sample-validate before scaling up
+- Sample-validate before scaling up — SAMPLE_CHECK.md is a hard gate, not a soft suggestion; no full-scale run until 20-record manual inspection per source is green or yellow
 - Report counts (attempted / extracted / validated / accepted / rejected) in every session summary
 - Ask the user before making schema decisions that affect downstream consumers
 </nested_agent_file_directives>
